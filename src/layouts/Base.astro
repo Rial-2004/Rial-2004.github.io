@@ -4,6 +4,11 @@ interface Props { title: string; description: string; image?: string }
 const { title, description, image = '/og.png' } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL(image, Astro.site);
+const path = Astro.url.pathname;
+const tabs = [
+  { href: '/', label: 'Sobre mí', active: path === '/' },
+  { href: '/apps/', label: 'Apps', active: path.startsWith('/apps') },
+];
 ---
 <!doctype html>
 <html lang="es">
@@ -24,9 +29,13 @@ const ogImage = new URL(image, Astro.site);
   <body class="min-h-dvh">
     <header class="mx-auto flex max-w-5xl items-center justify-between px-4 py-5">
       <a href="/" class="text-lg font-bold tracking-tight">riaal<span class="text-accent">.04</span></a>
-      <nav class="flex gap-5 text-sm text-muted">
-        <a class="hover:text-fg" href="/#apps">Apps</a>
-        <a class="hover:text-fg" href="/#blog">Blog</a>
+      <nav class="flex gap-1 text-sm" aria-label="Principal">
+        {tabs.map((t) => (
+          <a href={t.href} aria-current={t.active ? 'page' : undefined}
+             class:list={['rounded-full px-4 py-2 font-medium transition', t.active ? 'bg-accent text-on-accent' : 'text-muted hover:text-fg']}>
+            {t.label}
+          </a>
+        ))}
       </nav>
     </header>
     <main class="mx-auto max-w-5xl px-4 pb-24"><slot /></main>

@@ -1,0 +1,25 @@
+---
+// Sección de opiniones y propuestas de mejora de cada app.
+// Usa giscus (comentarios sobre GitHub Discussions): requiere repo público con Discussions activadas.
+// Mientras `feedback` no esté en el frontmatter de la app, se muestra un aviso.
+interface Props { app: string; feedback?: { repo: string; repoId: string; category: string; categoryId: string } }
+const { app, feedback } = Astro.props;
+---
+<section id="mejoras" class="mt-14">
+  <h2 class="text-2xl font-bold">Mejoras y opiniones</h2>
+  <p class="mt-2 max-w-2xl text-muted">¿Algo que no te gusta, un fallo o una idea para la próxima versión? Cuéntalo aquí abajo.</p>
+  {feedback ? (
+    <>
+      <div class="giscus mt-6"></div>
+      <script is:inline
+        src="https://giscus.app/client.js"
+        data-repo={feedback.repo} data-repo-id={feedback.repoId}
+        data-category={feedback.category} data-category-id={feedback.categoryId}
+        data-mapping="specific" data-term={app} data-strict="1"
+        data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top"
+        data-theme="dark" data-lang="es" data-loading="lazy" crossorigin="anonymous" async></script>
+    </>
+  ) : (
+    <p class="mt-6 rounded-2xl border border-dashed border-line p-6 text-muted">Este espacio se activará cuando la web esté publicada.</p>
+  )}
+</section>

@@ -20,6 +20,8 @@ const apps = defineCollection({
       text: z.string(),
       image: z.string().optional(),
     })).default([]),
+    // giscus: se rellena al publicar (ids que da giscus.app). Sin esto la sección muestra un aviso.
+    feedback: z.object({ repo: z.string(), repoId: z.string(), category: z.string(), categoryId: z.string() }).optional(),
     // Futuro: sección de donativos al final de la ficha. Sin este campo no se muestra nada.
     donations: z.object({ url: z.string().url(), text: z.string().optional() }).optional(),
   }),
