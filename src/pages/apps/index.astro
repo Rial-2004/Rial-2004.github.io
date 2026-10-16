@@ -9,7 +9,7 @@ const apps = (await getCollection('apps')).sort((a, b) => a.data.order - b.data.
     <p class="mt-3 max-w-xl text-muted">Elige una para ver qué hace, descargarla y leer su manual de uso.</p>
     <div class="mt-8 grid gap-4 sm:grid-cols-2">
       {apps.map((app) => (
-        <a href={`/apps/${app.id}/`} class="group rounded-2xl card border border-line p-6 transition hover:-translate-y-0.5 hover:border-accent">
+        <a href={`/apps/${app.id}/`} class="group rounded-2xl card border border-line shadow-xl shadow-black/10 p-6 transition hover:-translate-y-0.5 hover:border-accent">
           <p class="text-xs uppercase tracking-widest text-muted">Android</p>
           <h2 class="mt-2 text-2xl font-bold">{app.data.name}</h2>
           <p class="mt-1 text-accent">{app.data.tagline}</p>
