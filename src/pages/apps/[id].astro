@@ -82,7 +82,7 @@ const fecha = rel ? new Date(rel.date).toLocaleDateString('es-ES', { day: 'numer
       </section>
     )}
 
-    <Mejoras app={app.id} feedback={d.feedback} />
+    <Mejoras term={app.id} />
 
     {/* Futuro: donativos. Se activa añadiendo `donations` al frontmatter de la app. */}
     {d.donations && (
