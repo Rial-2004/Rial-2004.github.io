@@ -16,6 +16,18 @@ features:
     text: Seguimiento con variación semanal y widget de pantalla de inicio con tu rutina del día.
   - title: Tus datos son tuyos
     text: Base de datos local en el móvil y exportación a archivo como copia de seguridad.
+# TEXTOS PROVISIONALES: revisar cuando la actualización de la app esté cerrada y añadir capturas en public/capturas/appfitness/
+manual:
+  - title: Registra un ejercicio
+    text: Desde la pantalla de inicio, añade un ejercicio buscándolo por nombre, introduce peso y repeticiones de cada serie y guarda.
+  - title: Crea tus rutinas
+    text: En Rutinas, elige ejercicios del catálogo y define el objetivo de series y repeticiones de cada uno.
+  - title: Asígnalas a la semana
+    text: En el plan semanal, pon una rutina a cada día. La app mostrará automáticamente qué toca hoy.
+  - title: Revisa tu progreso
+    text: El historial muestra el calendario de asistencia y el detalle de cada día. Registra tu peso desde Mi perfil.
+  - title: Haz una copia de seguridad
+    text: En Ajustes puedes exportar tus datos y tu plan semanal a un archivo en Descargas.
 ---
 
-AppFitness nació para cubrir una necesidad concreta: apuntar el entrenamiento rápido, entre series, sin distracciones. Está escrita en Kotlin con Jetpack Compose y Material 3, con tema claro u oscuro.
+AppFitness nació para apuntar el entrenamiento rápido, entre series y sin distracciones. Está escrita en Kotlin con Jetpack Compose y Material 3, con modo claro u oscuro.

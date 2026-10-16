@@ -1,44 +1,48 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
-const apps = (await getCollection('apps')).sort((a, b) => a.data.order - b.data.order);
+const posts = (await getCollection('insta')).sort((a, b) => +b.data.date - +a.data.date);
+const fmt = (d: Date) => d.toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' });
 ---
-<Base title="riaal.04 · Apps y bitácora" description="Apps Android hechas a mano para descargar, y una bitácora personal de código y moto.">
-  <section class="py-16 sm:py-24">
-    <p class="reveal text-sm font-medium uppercase tracking-widest text-accent">Desarrollo · Android · Moto</p>
+<Base title="riaal.04 · Sobre mí" description="Desarrollo apps Android a mano, las comparto para descargar y cuento lo que hago.">
+  <section class="py-14 sm:py-24">
+    <p class="reveal text-sm font-medium uppercase tracking-widest text-accent">Hola, soy Rial</p>
     <h1 class="reveal mt-4 text-5xl font-extrabold leading-[1.05] tracking-tight sm:text-7xl">
-      Cosas que construyo<br /><span class="text-accent">para usarlas yo.</span>
+      Construyo cosas<br /><span class="text-accent">y las comparto.</span>
     </h1>
     <p class="reveal mt-6 max-w-xl text-lg text-muted">
-      Apps Android que descargas gratis, cómo funcionan por dentro y, pronto, las rutas que haga con la moto.
+      <!-- TEXTO PROVISIONAL: sustituir por tu presentación -->
+      Desarrollo apps Android para resolver mis propias necesidades y las dejo aquí para que las uses gratis. También cuento lo que voy haciendo, y pronto, las rutas en moto.
     </p>
     <div class="reveal mt-8 flex flex-wrap gap-3">
-      <a href="#apps" class="rounded-full bg-accent px-6 py-3 font-semibold text-on-accent">Ver apps</a>
-      <a href="#blog" class="rounded-full border border-line px-6 py-3 font-semibold">Bitácora</a>
+      <a href="/apps/" class="rounded-full bg-accent px-6 py-3 font-semibold text-on-accent">Ver mis apps</a>
+      <a href="https://instagram.com/riaal.04" rel="noopener" class="rounded-full border border-line px-6 py-3 font-semibold">@riaal.04</a>
     </div>
   </section>
 
-  <section id="apps" class="scroll-mt-8 py-8">
-    <h2 class="text-2xl font-bold tracking-tight">Apps</h2>
-    <div class="mt-6 grid gap-4 sm:grid-cols-2">
-      {apps.map((app) => (
-        <a href={`/apps/${app.id}/`} class="group rounded-2xl border border-line bg-surface p-6 transition hover:border-accent">
-          <p class="text-xs uppercase tracking-widest text-muted">Android</p>
-          <h3 class="mt-2 text-2xl font-bold">{app.data.name}</h3>
-          <p class="mt-1 text-accent">{app.data.tagline}</p>
-          <p class="mt-3 text-muted">{app.data.summary}</p>
-          <p class="mt-5 text-sm font-semibold group-hover:text-accent">Ver y descargar →</p>
-        </a>
-      ))}
-      <div class="rounded-2xl border border-dashed border-line p-6 text-muted">
-        <h3 class="text-lg font-semibold text-fg">Más apps en camino</h3>
-        <p class="mt-2">Iré publicando aquí las que vaya terminando.</p>
-      </div>
+  <section class="py-8">
+    <div class="flex items-end justify-between">
+      <h2 class="text-2xl font-bold tracking-tight">Últimas publicaciones</h2>
+      <a href="https://instagram.com/riaal.04" rel="noopener" class="text-sm text-muted hover:text-fg">Ver en Instagram →</a>
     </div>
-  </section>
-
-  <section id="blog" class="scroll-mt-8 py-16">
-    <h2 class="text-2xl font-bold tracking-tight">Bitácora</h2>
-    <p class="mt-3 max-w-xl text-muted">Rutas, viajes y experiencias sobre dos ruedas, y notas de desarrollo. Todavía vacía: empieza cuando llegue la moto.</p>
+    {posts.length ? (
+      <ul class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3">
+        {posts.map((p) => (
+          <li>
+            <a href={p.data.url} rel="noopener" class="group block overflow-hidden rounded-2xl border border-line bg-surface">
+              <div class="aspect-square bg-bg">
+                {p.data.image && <img src={p.data.image} alt={p.data.caption} loading="lazy" class="h-full w-full object-cover transition group-hover:scale-105" />}
+              </div>
+              <div class="p-3">
+                <p class="line-clamp-2 text-sm">{p.data.caption}</p>
+                <p class="mt-1 text-xs text-muted">{fmt(p.data.date)}</p>
+              </div>
+            </a>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p class="mt-6 rounded-2xl border border-dashed border-line p-6 text-muted">Aún no hay publicaciones aquí. Se añaden con un archivo por post en <code>src/content/insta</code>.</p>
+    )}
   </section>
 </Base>

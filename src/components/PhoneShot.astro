@@ -1,0 +1,11 @@
+---
+interface Props { src?: string; alt: string }
+const { src, alt } = Astro.props;
+---
+<div class="mx-auto w-44 shrink-0 rounded-[2rem] border-4 border-line bg-surface p-1.5 shadow-xl">
+  <div class="aspect-[9/19] overflow-hidden rounded-[1.5rem] bg-bg">
+    {src
+      ? <img src={src} alt={alt} loading="lazy" class="h-full w-full object-cover" />
+      : <div class="flex h-full items-center justify-center p-4 text-center text-xs text-muted">Captura pendiente</div>}
+  </div>
+</div>

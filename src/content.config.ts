@@ -12,9 +12,28 @@ const apps = defineCollection({
     releasesRepo: z.string().optional(),
     apkPrefix: z.string(),
     minAndroid: z.string(),
-    features: z.array(z.object({ title: z.string(), text: z.string() })),
     order: z.number().default(0),
+    features: z.array(z.object({ title: z.string(), text: z.string() })),
+    // Manual de uso: cada paso lleva una captura opcional en /public/capturas/<app>/
+    manual: z.array(z.object({
+      title: z.string(),
+      text: z.string(),
+      image: z.string().optional(),
+    })).default([]),
+    // Futuro: sección de donativos al final de la ficha. Sin este campo no se muestra nada.
+    donations: z.object({ url: z.string().url(), text: z.string().optional() }).optional(),
   }),
 });
 
-export const collections = { apps };
+// Publicaciones de Instagram: se añaden a mano (imagen en /public/insta/, enlace al post original).
+const insta = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/insta' }),
+  schema: z.object({
+    date: z.coerce.date(),
+    caption: z.string(),
+    url: z.string().url(),
+    image: z.string().optional(),
+  }),
+});
+
+export const collections = { apps, insta };
