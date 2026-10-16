@@ -29,7 +29,7 @@ const fecha = rel ? new Date(rel.date).toLocaleDateString('es-ES', { day: 'numer
       <div class="[&_p]:leading-relaxed"><Content /></div>
     </section>
 
-    <section id="descarga" class="mt-8 rounded-2xl border border-line shadow-xl shadow-black/10 bg-surface p-6">
+    <section id="descarga" class="mt-8 rounded-2xl border border-line shadow-xl shadow-fg/10 bg-surface p-6">
       <h2 class="text-sm font-semibold uppercase tracking-widest text-muted">Descarga</h2>
       {rel ? (
         <div class="mt-3">
@@ -56,7 +56,7 @@ const fecha = rel ? new Date(rel.date).toLocaleDateString('es-ES', { day: 'numer
       <h2 class="text-2xl font-bold">Funcionalidades</h2>
       <ul class="mt-5 grid gap-4 sm:grid-cols-2">
         {d.features.map((f) => (
-          <li class="rounded-2xl border border-line shadow-xl shadow-black/10 bg-surface p-5">
+          <li class="rounded-2xl border border-line shadow-xl shadow-fg/10 bg-surface p-5">
             <h3 class="font-semibold">{f.title}</h3>
             <p class="mt-1 text-muted">{f.text}</p>
           </li>
@@ -86,7 +86,7 @@ const fecha = rel ? new Date(rel.date).toLocaleDateString('es-ES', { day: 'numer
 
     {/* Futuro: donativos. Se activa añadiendo `donations` al frontmatter de la app. */}
     {d.donations && (
-      <section class="mt-14 rounded-2xl border border-line shadow-xl shadow-black/10 bg-surface p-6 text-center">
+      <section class="mt-14 rounded-2xl border border-line shadow-xl shadow-fg/10 bg-surface p-6 text-center">
         <h2 class="text-xl font-bold">¿Te ha sido útil?</h2>
         <p class="mt-2 text-muted">{d.donations.text ?? 'Si quieres apoyar el proyecto, puedes hacer un pequeño donativo.'}</p>
         <a href={d.donations.url} rel="noopener" class="mt-4 inline-block rounded-full border border-accent shadow-md shadow-accent/20 px-6 py-2.5 font-semibold text-accent">Hacer un donativo</a>

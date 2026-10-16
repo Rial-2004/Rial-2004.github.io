@@ -17,7 +17,7 @@ const tabs = [
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#eaf8ff" />
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta property="og:type" content="website" />
@@ -25,22 +25,55 @@ const tabs = [
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
+    <script is:inline>
+      // Tema guardado o el del sistema, aplicado antes de pintar para evitar parpadeos
+      (function () {
+        var t = null;
+        try { t = localStorage.getItem('theme'); } catch (e) {}
+        if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', t);
+      })();
+    </script>
   </head>
   <body class="min-h-dvh">
-    <header class="mx-auto flex max-w-5xl items-center justify-between px-4 py-5">
+    <header class="mx-auto flex max-w-5xl items-center justify-between gap-2 px-4 py-5">
       <a href="/" class="text-lg font-bold tracking-tight">riaal<span class="text-accent">.04</span></a>
-      <nav class="flex gap-1 text-sm" aria-label="Principal">
-        {tabs.map((t) => (
-          <a href={t.href} aria-current={t.active ? 'page' : undefined}
-             class:list={['rounded-full px-4 py-2 font-medium transition', t.active ? "bg-accent text-on-accent shadow-md shadow-accent/30" : 'text-muted hover:text-fg']}>
-            {t.label}
-          </a>
-        ))}
-      </nav>
+      <div class="flex items-center gap-2">
+        <nav class="flex gap-1 text-sm" aria-label="Principal">
+          {tabs.map((t) => (
+            <a href={t.href} aria-current={t.active ? 'page' : undefined}
+               class:list={['rounded-full px-4 py-2 font-medium transition', t.active ? 'bg-accent text-on-accent shadow-md shadow-accent/30' : 'text-muted hover:text-fg']}>
+              {t.label}
+            </a>
+          ))}
+        </nav>
+        <button id="theme-toggle" type="button" aria-label="Cambiar entre tema claro y oscuro" title="Cambiar tema"
+          class="btn-outline grid h-10 w-10 place-items-center rounded-full text-lg">
+          <span data-icon="moon">🌙</span><span data-icon="sun" style="display:none">☀️</span>
+        </button>
+      </div>
     </header>
     <main class="mx-auto max-w-5xl px-4 pb-24"><slot /></main>
     <footer class="border-t border-line py-8 text-center text-sm text-muted">
-      © {new Date().getFullYear()} riaal.04 · Hecho con Astro
+      <p>© {new Date().getFullYear()} riaal.04 · Hecho con Astro</p>
+      <p class="mt-1">Bugcat Capoo es creación de Yara. Los dibujos de esta web son un homenaje de fan.</p>
     </footer>
+    <script is:inline>
+      (function () {
+        var root = document.documentElement, btn = document.getElementById('theme-toggle');
+        function paint() {
+          var dark = root.getAttribute('data-theme') === 'dark';
+          btn.querySelector('[data-icon="moon"]').style.display = dark ? 'none' : '';
+          btn.querySelector('[data-icon="sun"]').style.display = dark ? '' : 'none';
+        }
+        paint();
+        btn.addEventListener('click', function () {
+          var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          try { localStorage.setItem('theme', next); } catch (e) {}
+          paint();
+        });
+      })();
+    </script>
   </body>
 </html>
