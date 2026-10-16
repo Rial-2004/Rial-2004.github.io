@@ -21,3 +21,16 @@ body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
   .reveal:nth-child(3) { animation-delay: 160ms; }
   @keyframes reveal { from { opacity: 0; translate: 0 14px; } }
 }
+
+/* Resplandor ambiental detrás del contenido */
+body::before {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(60rem 30rem at 85% -10%, oklch(0.82 0.16 75 / 0.16), transparent 60%),
+    radial-gradient(40rem 25rem at -10% 40%, oklch(0.7 0.14 45 / 0.10), transparent 60%);
+}
+.text-gradient {
+  background: linear-gradient(95deg, oklch(0.88 0.15 85), oklch(0.74 0.17 55));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.card { background: color-mix(in oklab, var(--color-surface) 80%, transparent); backdrop-filter: blur(6px); }
