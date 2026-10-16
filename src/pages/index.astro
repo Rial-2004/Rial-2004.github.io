@@ -1,0 +1,44 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+const apps = (await getCollection('apps')).sort((a, b) => a.data.order - b.data.order);
+---
+<Base title="riaal.04 · Apps y bitácora" description="Apps Android hechas a mano para descargar, y una bitácora personal de código y moto.">
+  <section class="py-16 sm:py-24">
+    <p class="reveal text-sm font-medium uppercase tracking-widest text-accent">Desarrollo · Android · Moto</p>
+    <h1 class="reveal mt-4 text-5xl font-extrabold leading-[1.05] tracking-tight sm:text-7xl">
+      Cosas que construyo<br /><span class="text-accent">para usarlas yo.</span>
+    </h1>
+    <p class="reveal mt-6 max-w-xl text-lg text-muted">
+      Apps Android que descargas gratis, cómo funcionan por dentro y, pronto, las rutas que haga con la moto.
+    </p>
+    <div class="reveal mt-8 flex flex-wrap gap-3">
+      <a href="#apps" class="rounded-full bg-accent px-6 py-3 font-semibold text-on-accent">Ver apps</a>
+      <a href="#blog" class="rounded-full border border-line px-6 py-3 font-semibold">Bitácora</a>
+    </div>
+  </section>
+
+  <section id="apps" class="scroll-mt-8 py-8">
+    <h2 class="text-2xl font-bold tracking-tight">Apps</h2>
+    <div class="mt-6 grid gap-4 sm:grid-cols-2">
+      {apps.map((app) => (
+        <a href={`/apps/${app.id}/`} class="group rounded-2xl border border-line bg-surface p-6 transition hover:border-accent">
+          <p class="text-xs uppercase tracking-widest text-muted">Android</p>
+          <h3 class="mt-2 text-2xl font-bold">{app.data.name}</h3>
+          <p class="mt-1 text-accent">{app.data.tagline}</p>
+          <p class="mt-3 text-muted">{app.data.summary}</p>
+          <p class="mt-5 text-sm font-semibold group-hover:text-accent">Ver y descargar →</p>
+        </a>
+      ))}
+      <div class="rounded-2xl border border-dashed border-line p-6 text-muted">
+        <h3 class="text-lg font-semibold text-fg">Más apps en camino</h3>
+        <p class="mt-2">Iré publicando aquí las que vaya terminando.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="blog" class="scroll-mt-8 py-16">
+    <h2 class="text-2xl font-bold tracking-tight">Bitácora</h2>
+    <p class="mt-3 max-w-xl text-muted">Rutas, viajes y experiencias sobre dos ruedas, y notas de desarrollo. Todavía vacía: empieza cuando llegue la moto.</p>
+  </section>
+</Base>
