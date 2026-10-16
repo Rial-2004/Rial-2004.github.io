@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { links } from '../data/links';
+import { links, instagram } from '../data/links';
 const enlaces = links.filter((l) => l.url || l.handle);
 ---
 <Base title="riaal.04 · Sobre mí" description="Desarrollo apps Android a mano, las comparto para descargar y cuento lo que hago.">
@@ -17,7 +17,7 @@ const enlaces = links.filter((l) => l.url || l.handle);
     </div>
     <div class="reveal relative mt-8 flex flex-wrap gap-3">
       <a href="/apps/" class="rounded-full bg-accent px-6 py-3 font-semibold text-on-accent shadow-lg shadow-accent/30 transition hover:-translate-y-0.5 hover:shadow-xl">Ver mis apps</a>
-      <a href="https://instagram.com/riaal.04" rel="noopener" class="btn-outline rounded-full px-6 py-3 font-semibold">📸 @riaal.04</a>
+      <a href={instagram.url} rel="noopener" class="btn-outline inline-flex items-center gap-2 rounded-full px-6 py-3 font-semibold"><svg viewBox="0 0 24 24" class="h-5 w-5 fill-current" aria-hidden="true"><path d={instagram.path} /></svg>{instagram.handle}</a>
     </div>
   </section>
 
@@ -35,12 +35,12 @@ const enlaces = links.filter((l) => l.url || l.handle);
           <li>
             {l.url ? (
               <a href={l.url} rel="noopener" class="btn-outline flex items-center gap-3 rounded-2xl px-4 py-3">
-                <span class="text-2xl" aria-hidden="true">{l.icon}</span>
+                <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg" style={"background:#" + l.icon?.hex} aria-hidden="true"><svg viewBox="0 0 24 24" class="h-5 w-5 fill-white"><path d={l.icon?.path} /></svg></span>
                 <span class="min-w-0"><span class="block font-semibold">{l.name}</span>{l.handle && <span class="block truncate text-xs text-muted">{l.handle}</span>}</span>
               </a>
             ) : (
               <div class="card flex items-center gap-3 rounded-2xl border border-line px-4 py-3">
-                <span class="text-2xl" aria-hidden="true">{l.icon}</span>
+                <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg" style={"background:#" + l.icon?.hex} aria-hidden="true"><svg viewBox="0 0 24 24" class="h-5 w-5 fill-white"><path d={l.icon?.path} /></svg></span>
                 <span class="min-w-0"><span class="block font-semibold">{l.name}</span><span class="block truncate text-xs text-muted select-all">{l.handle}</span></span>
               </div>
             )}
