@@ -1,17 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
-import Capoo from '../components/Capoo.astro';
 import { links } from '../data/links';
-const enlaces = links.filter((l) => l.url);
+const enlaces = links.filter((l) => l.url || l.handle);
 ---
 <Base title="riaal.04 · Sobre mí" description="Desarrollo apps Android a mano, las comparto para descargar y cuento lo que hago.">
   <section class="relative py-14 sm:py-24">
-    <div class="pointer-events-none absolute inset-0 overflow-visible" aria-hidden="true">
-      <Capoo mood="happy" class="sticker right-0 top-2 w-28 sm:right-4 sm:top-6 sm:w-48" style="--rot:6deg;--dur:7s" />
-      <Capoo mood="love" class="sticker right-24 top-[19rem] hidden w-24 sm:block" style="--rot:-8deg;--dur:8s;--delay:-2s" />
-      <Capoo mood="sleepy" class="sticker bottom-0 right-6 hidden w-20 sm:right-52 sm:block sm:w-28" style="--rot:-5deg;--dur:9s;--delay:-4s" />
-      <Capoo mood="chick" class="sticker -left-3 bottom-2 hidden w-28 sm:block" style="--rot:7deg;--dur:6.5s;--delay:-1s" />
-    </div>
     <p class="reveal relative text-sm font-medium uppercase tracking-widest text-accent">Hola, soy Rial</p>
     <h1 class="reveal relative mt-4 text-[2.5rem] font-extrabold leading-[1.08] tracking-tight sm:text-7xl">
       Construyo cosas<br /><span class="text-gradient">y las comparto.</span>
@@ -40,10 +33,17 @@ const enlaces = links.filter((l) => l.url);
       <ul class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
         {enlaces.map((l) => (
           <li>
-            <a href={l.url} rel="noopener" class="btn-outline flex items-center gap-3 rounded-2xl px-4 py-3">
-              <span class="text-2xl" aria-hidden="true">{l.icon}</span>
-              <span class="min-w-0"><span class="block font-semibold">{l.name}</span>{l.handle && <span class="block truncate text-xs text-muted">{l.handle}</span>}</span>
-            </a>
+            {l.url ? (
+              <a href={l.url} rel="noopener" class="btn-outline flex items-center gap-3 rounded-2xl px-4 py-3">
+                <span class="text-2xl" aria-hidden="true">{l.icon}</span>
+                <span class="min-w-0"><span class="block font-semibold">{l.name}</span>{l.handle && <span class="block truncate text-xs text-muted">{l.handle}</span>}</span>
+              </a>
+            ) : (
+              <div class="card flex items-center gap-3 rounded-2xl border border-line px-4 py-3">
+                <span class="text-2xl" aria-hidden="true">{l.icon}</span>
+                <span class="min-w-0"><span class="block font-semibold">{l.name}</span><span class="block truncate text-xs text-muted select-all">{l.handle}</span></span>
+              </div>
+            )}
           </li>
         ))}
       </ul>
