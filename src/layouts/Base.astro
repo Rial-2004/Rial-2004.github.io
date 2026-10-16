@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import Icon from '../components/Icon.astro';
 interface Props { title: string; description: string; image?: string }
 const { title, description, image = '/og.png' } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -49,7 +50,7 @@ const tabs = [
         </nav>
         <button id="theme-toggle" type="button" aria-label="Cambiar entre tema claro y oscuro" title="Cambiar tema"
           class="btn-outline grid h-10 w-10 place-items-center rounded-full text-lg">
-          <span data-icon="moon">🌙</span><span data-icon="sun" style="display:none">☀️</span>
+          <span data-icon="moon"><Icon name="moon" class="h-5 w-5" /></span><span data-icon="sun" style="display:none"><Icon name="sun" class="h-5 w-5" /></span>
         </button>
       </div>
     </header>
