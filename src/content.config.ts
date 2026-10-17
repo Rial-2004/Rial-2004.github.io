@@ -8,17 +8,22 @@ const apps = defineCollection({
     name: z.string(),
     tagline: z.string(),
     summary: z.string(),
-    // Repo público de Releases donde está la APK (los repos privados no sirven descargas)
+    // Repo público y Release donde está la APK (los repos privados no sirven descargas). La CI de la app publica ahí
+    // `version.json` (para mostrar la versión y el tamaño) y una copia `<apkFile>` con nombre fijo para el botón.
     releasesRepo: z.string().optional(),
-    apkPrefix: z.string(),
+    releaseTag: z.string().default('latest'),
+    apkFile: z.string().default('app.apk'),
     minAndroid: z.string(),
     order: z.number().default(0),
     features: z.array(z.object({ title: z.string(), text: z.string() })),
-    // Manual de uso: cada paso lleva una captura opcional en /public/capturas/<app>/
+    // Manual de uso por casos de uso (ver components/ManualCasos.astro). Capturas en /public/capturas/<app>/.
     manual: z.array(z.object({
+      categoria: z.enum(['entrenar', 'rutinas', 'progreso', 'comunidad', 'perfil', 'widgets', 'actualizar']),
       title: z.string(),
-      text: z.string(),
-      image: z.string().optional(),
+      summary: z.string(),
+      steps: z.array(z.string()).default([]),
+      images: z.array(z.string()).default([]),
+      note: z.string().optional(),
     })).default([]),
     // Futuro: sección de donativos al final de la ficha. Sin este campo no se muestra nada.
     donations: z.object({ url: z.string().url(), text: z.string().optional() }).optional(),
