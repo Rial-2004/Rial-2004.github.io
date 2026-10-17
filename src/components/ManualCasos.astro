@@ -150,6 +150,10 @@ const datos = casos.map((c) => ({
   }
   .visor-x:hover { border-color: var(--color-accent); }
 
+  /* Casos sin captura: solo texto, en una columna. */
+  .visor[data-sin-img] .visor-caja { grid-template-columns: minmax(0, 1fr); }
+  .visor[data-sin-img] .visor-img { display: none; }
+
   /* Zoom: la captura ocupa todo el visor a tamaño real y se desplaza; se vuelve a tocar para salir. */
   .visor[data-zoom] .visor-caja { grid-template-columns: minmax(0, 1fr); }
   .visor[data-zoom] .visor-txt { display: none; }
@@ -233,6 +237,7 @@ const datos = casos.map((c) => ({
       const v = visibles();
       q('[data-pos]').textContent = `${Math.max(v.indexOf(actual), 0) + 1} / ${v.length}`;
       q('[data-ayuda]').hidden = d.images.length === 0;
+      if (d.images.length === 0) dialog.setAttribute('data-sin-img', ''); else dialog.removeAttribute('data-sin-img');
       foto = 0;
       pintarFoto();
       dialog.querySelector('.visor-caja')!.scrollTop = 0;
