@@ -1,7 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import Mejoras from '../../components/Mejoras.astro';
 import PhoneShot from '../../components/PhoneShot.astro';
 import { latestApk } from '../../lib/release';
 
@@ -82,7 +81,6 @@ const fecha = rel ? new Date(rel.date).toLocaleDateString('es-ES', { day: 'numer
       </section>
     )}
 
-    <Mejoras term={app.id} />
 
     {/* Futuro: donativos. Se activa añadiendo `donations` al frontmatter de la app. */}
     {d.donations && (
