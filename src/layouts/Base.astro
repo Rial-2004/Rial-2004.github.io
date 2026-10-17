@@ -1,8 +1,8 @@
 ---
 import '../styles/global.css';
 import Icon from '../components/Icon.astro';
-interface Props { title: string; description: string; image?: string }
-const { title, description, image = '/og.png' } = Astro.props;
+interface Props { title: string; description: string; image?: string; tema?: string }
+const { title, description, image = '/og.png', tema } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL(image, Astro.site);
 const path = Astro.url.pathname;
@@ -12,7 +12,7 @@ const tabs = [
 ];
 ---
 <!doctype html>
-<html lang="es">
+<html lang="es" data-app={tema}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />

@@ -13,6 +13,7 @@ const apps = defineCollection({
     releasesRepo: z.string().optional(),
     releaseTag: z.string().default('latest'),
     apkFile: z.string().default('app.apk'),
+    icon: z.string().optional(),
     minAndroid: z.string(),
     order: z.number().default(0),
     features: z.array(z.object({ title: z.string(), text: z.string() })),

@@ -5,6 +5,7 @@ summary: Registro de entrenamientos, rutinas, programas y peso corporal en una a
 releasesRepo: Rial-2004/Rial-2004.github.io
 releaseTag: appfitness
 apkFile: AppFitness.apk
+icon: /appfitness-icon.svg
 minAndroid: Android 14 o superior
 order: 1
 features:
