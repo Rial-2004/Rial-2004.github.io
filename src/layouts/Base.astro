@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import Icon from '../components/Icon.astro';
+import FondoAurora from '../components/react/FondoAurora.jsx';
 interface Props { title: string; description: string; image?: string; tema?: string }
 const { title, description, image = '/og.png', tema } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -54,6 +55,7 @@ const tabs = [
         </button>
       </div>
     </header>
+    <div class="pointer-events-none fixed inset-0 -z-10" aria-hidden="true"><FondoAurora client:idle /></div>
     <main class="mx-auto max-w-5xl px-4 pb-24"><slot /></main>
     <footer class="border-t border-line py-8 text-center text-sm text-muted">
       <p>© {new Date().getFullYear()} riaal.04 · Hecho con Astro</p>
