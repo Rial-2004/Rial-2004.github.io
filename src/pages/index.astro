@@ -1,36 +1,96 @@
 ---
+import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import { links, instagram } from '../data/links';
+import { latestApk } from '../lib/release';
 const enlaces = links.filter((l) => l.url || l.handle);
+const apps = (await getCollection('apps')).sort((a, b) => a.data.order - b.data.order);
+const destacada = apps[0];
+const rel = destacada ? await latestApk(destacada.data.releasesRepo, destacada.data.releaseTag, destacada.data.apkFile) : null;
+const reglas = [
+  { t: 'Gratis', d: 'Las de Android se descargan sin pagar nada.' },
+  { t: 'Sin cuenta', d: 'AppFitness funciona sin registro y sin conexión.' },
+  { t: 'Tus datos, tuyos', d: 'Todo vive en tu móvil, con copia completa a un archivo.' },
+  { t: 'Firma verificada', d: 'Cada actualización se comprueba antes de instalarse.' },
+];
 ---
 <Base title="riaal.04 · Sobre mí" description="Desarrollo apps Android a mano, las comparto para descargar y cuento lo que hago.">
-  <section class="relative py-14 sm:py-24">
-    <p class="reveal relative text-sm font-medium uppercase tracking-widest text-accent">Hola, soy Rial</p>
-    <h1 class="reveal relative mt-4 text-[2.5rem] font-extrabold leading-[1.08] tracking-tight sm:text-7xl">
-      Construyo cosas<br /><span class="text-gradient">y las comparto.</span>
-    </h1>
-    <div class="reveal relative mt-6 max-w-xl space-y-3 text-lg text-muted">
-      <p>Desarrollo apps Android para resolver mis propias necesidades y las dejo aquí para que las uses gratis.</p>
-      <p>Además, cuento lo que voy haciendo.</p>
-      <!-- TEXTO PROVISIONAL: sustituir por a qué te dedicas exactamente -->
-      <p>En el día a día me dedico al desarrollo de software.</p>
+  <section data-hero class="relative grid items-center gap-10 overflow-x-clip py-10 sm:py-16 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:py-20">
+    <div class="min-w-0">
+      <p class="reveal text-sm font-medium uppercase tracking-widest text-accent">Hola, soy Rial</p>
+      <h1 class="reveal mt-4 text-[2.6rem] font-extrabold leading-[1.04] sm:text-7xl">
+        Construyo cosas<br /><span class="text-gradient">y las comparto.</span>
+      </h1>
+      <div class="reveal mt-6 max-w-xl space-y-3 text-lg text-muted">
+        <p>Desarrollo apps Android para resolver mis propias necesidades y las dejo aquí para que las uses gratis.</p>
+        <p>En el día a día me dedico al desarrollo de software, y aquí cuento lo que voy haciendo.</p>
+      </div>
+      <div class="reveal mt-8 flex flex-wrap gap-3">
+        <a href="/apps/" class="cta rounded-full px-6 py-3 font-semibold">Ver mis apps <span class="flecha" aria-hidden="true">→</span></a>
+        <a href={instagram.url} rel="noopener" class="btn-outline inline-flex items-center gap-2 rounded-full px-6 py-3 font-semibold"><svg viewBox="0 0 24 24" class="h-5 w-5 fill-current" aria-hidden="true"><path d={instagram.path} /></svg>{instagram.handle}</a>
+      </div>
+      {destacada && (
+        <a href={`/apps/${destacada.id}/`} data-app={destacada.id} class="reveal lift card mt-8 inline-flex max-w-full items-center gap-3 rounded-2xl border border-line p-3 pr-5">
+          {destacada.data.icon && <img src={destacada.data.icon} alt="" width="44" height="44" class="h-11 w-11 shrink-0 rounded-xl" style={`view-transition-name: icono-${destacada.id}`} />}
+          <span class="min-w-0 text-left">
+            <span class="block text-xs font-semibold uppercase tracking-wider text-accent">Lo último</span>
+            <span class="block font-semibold text-fg">{destacada.data.name}{rel?.version ? ` ${rel.version}` : ''}<span class="hidden font-normal text-muted sm:inline"> · {destacada.data.tagline}</span></span>
+          </span>
+        </a>
+      )}
     </div>
-    <div class="reveal relative mt-8 flex flex-wrap gap-3">
-      <a href="/apps/" class="rounded-full bg-accent px-6 py-3 font-semibold text-on-accent shadow-lg shadow-accent/30 transition hover:-translate-y-0.5 hover:shadow-xl">Ver mis apps</a>
-      <a href={instagram.url} rel="noopener" class="btn-outline inline-flex items-center gap-2 rounded-full px-6 py-3 font-semibold"><svg viewBox="0 0 24 24" class="h-5 w-5 fill-current" aria-hidden="true"><path d={instagram.path} /></svg>{instagram.handle}</a>
+
+    <div class="reveal hero-phones" aria-hidden="true">
+      <div class="phone phone-a"><img src="/capturas/appfitness/hoy.webp" alt="" width="720" height="1596" fetchpriority="high" /></div>
+      <div class="phone phone-b"><img src="/capturas/appfitness/progreso.webp" alt="" width="720" height="1596" /></div>
     </div>
   </section>
 
-  <section class="grid gap-3 sm:grid-cols-3" aria-label="Qué encontrarás">
-    <div class="card spotlight rounded-2xl border border-line shadow-xl shadow-fg/10 p-5"><span class="grid h-11 w-11 place-items-center rounded-xl bg-accent/12 text-accent"><Icon name="smartphone" /></span><h2 class="mt-3 font-bold">Apps Android</h2><p class="mt-1 text-sm text-muted">Descarga directa del APK, sin tiendas de por medio.</p></div>
-    <div class="card spotlight rounded-2xl border border-line shadow-xl shadow-fg/10 p-5"><span class="grid h-11 w-11 place-items-center rounded-xl bg-accent/12 text-accent"><Icon name="book-open" /></span><h2 class="mt-3 font-bold">Manual en cada app</h2><p class="mt-1 text-sm text-muted">Funciones explicadas paso a paso, con capturas.</p></div>
-    <div class="card spotlight rounded-2xl border border-line shadow-xl shadow-fg/10 p-5"><span class="grid h-11 w-11 place-items-center rounded-xl bg-accent/12 text-accent"><Icon name="lightbulb" /></span><h2 class="mt-3 font-bold">Tus ideas cuentan</h2><p class="mt-1 text-sm text-muted">Propón mejoras y apps que te gustaría ver.</p></div>
+  <section class="grid gap-4 lg:grid-cols-3 lg:grid-rows-2" aria-label="Qué encontrarás">
+    <a href="/apps/" class="lift card spotlight group rounded-3xl border border-line p-7 shadow-xl shadow-fg/10 lg:col-span-2 lg:row-span-2 lg:flex lg:flex-col">
+      <span class="grid h-12 w-12 place-items-center rounded-2xl bg-accent/12 text-accent"><Icon name="smartphone" /></span>
+      <h2 class="mt-5 text-3xl font-bold sm:text-4xl">Apps Android</h2>
+      <p class="mt-2 max-w-xl text-muted">Descarga directa del APK, sin tiendas de por medio. Hechas a mano para un uso real, no para rellenar un catálogo.</p>
+      <ul class="mt-6 grid gap-x-8 gap-y-4 sm:grid-cols-2 lg:mt-auto">
+        {reglas.map((r) => (
+          <li class="rounded-2xl bg-accent/8 p-4"><strong class="font-display text-lg font-bold text-fg">{r.t}</strong><span class="mt-0.5 block text-sm text-muted">{r.d}</span></li>
+        ))}
+      </ul>
+      <p class="mt-6 text-sm font-semibold text-accent">Ver todas <span class="inline-block transition-transform group-hover:translate-x-1" aria-hidden="true">→</span></p>
+    </a>
+    <div class="card spotlight rounded-3xl border border-line p-6 shadow-xl shadow-fg/10">
+      <span class="grid h-11 w-11 place-items-center rounded-xl bg-accent/12 text-accent"><Icon name="book-open" /></span>
+      <h2 class="mt-4 text-xl font-bold">Manual en cada app</h2>
+      <p class="mt-1 text-muted">Funciones explicadas paso a paso, con capturas de la app real.</p>
+    </div>
+    <div class="card spotlight rounded-3xl border border-line p-6 shadow-xl shadow-fg/10">
+      <span class="grid h-11 w-11 place-items-center rounded-xl bg-accent/12 text-accent"><Icon name="lightbulb" /></span>
+      <h2 class="mt-4 text-xl font-bold">Tus ideas cuentan</h2>
+      <p class="mt-1 text-muted">Propón mejoras y apps que te gustaría ver.</p>
+    </div>
+    <div class="card spotlight rounded-3xl border border-line p-6 shadow-xl shadow-fg/10 lg:col-span-3">
+      <h2 class="text-xl font-bold">Cómo las hago</h2>
+      <p class="mt-1 max-w-3xl text-muted">Kotlin y Jetpack Compose, con la base de datos en el propio móvil. Cada cambio que pueda tocar tus datos lleva su migración para que al actualizar no pierdas nada.</p>
+    </div>
   </section>
+
+  <script is:inline>
+    // Los móviles de la portada siguen al puntero con un desplazamiento mínimo (solo con ratón y sin "reducir movimiento")
+    (function () {
+      var hero = document.querySelector('[data-hero]');
+      if (!hero || !matchMedia('(hover: hover) and (prefers-reduced-motion: no-preference)').matches) return;
+      hero.addEventListener('pointermove', function (e) {
+        var r = hero.getBoundingClientRect();
+        hero.style.setProperty('--px', ((e.clientX - r.left) / r.width - 0.5).toFixed(3));
+        hero.style.setProperty('--py', ((e.clientY - r.top) / r.height - 0.5).toFixed(3));
+      });
+    })();
+  </script>
 
   {enlaces.length > 0 && (
-    <section class="mt-12" aria-label="Enlaces">
-      <h2 class="text-xl font-bold tracking-tight sm:text-2xl">Encuéntrame en</h2>
+    <section class="mt-14" aria-label="Enlaces">
+      <h2 class="text-xl font-bold sm:text-2xl">Encuéntrame en</h2>
       <ul class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
         {enlaces.map((l) => (
           <li>

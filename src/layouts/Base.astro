@@ -23,10 +23,16 @@ const tabs = [
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="riaal.04" />
+    <meta property="og:locale" content="es_ES" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:url" content={canonical} />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
     <script is:inline>
       // Tema guardado o el del sistema, aplicado antes de pintar para evitar parpadeos
       (function () {
@@ -38,13 +44,14 @@ const tabs = [
     </script>
   </head>
   <body class="min-h-dvh">
-    <header class="mx-auto flex max-w-5xl items-center justify-between gap-2 px-4 py-5">
-      <a href="/" class="text-lg font-bold tracking-tight">riaal<span class="text-accent">.04</span></a>
+    <a href="#contenido" class="skip-link">Saltar al contenido</a>
+    <header class="site-header mx-auto flex max-w-5xl items-center justify-between gap-2 px-4 py-5">
+      <a href="/" class="logo font-display text-xl font-extrabold tracking-tight">riaal<span class="punto text-accent">.04</span></a>
       <div class="flex items-center gap-2">
         <nav class="flex gap-1 text-sm" aria-label="Principal">
           {tabs.map((t) => (
             <a href={t.href} aria-current={t.active ? 'page' : undefined}
-               class:list={['rounded-full px-4 py-2 font-medium transition', t.active ? 'bg-accent text-on-accent shadow-md shadow-accent/30' : 'text-muted hover:text-fg']}>
+               class:list={['navlink rounded-full px-4 py-2.5 font-medium transition-colors', t.active ? 'bg-accent text-on-accent shadow-md shadow-accent/30' : 'text-muted hover:text-fg']}>
               {t.label}
             </a>
           ))}
@@ -56,9 +63,16 @@ const tabs = [
       </div>
     </header>
     <div class="pointer-events-none fixed inset-0 -z-10" aria-hidden="true"><FondoAurora client:idle /></div>
-    <main class="mx-auto max-w-5xl px-4 pb-24"><slot /></main>
-    <footer class="border-t border-line py-8 text-center text-sm text-muted">
-      <p>© {new Date().getFullYear()} riaal.04 · Hecho con Astro</p>
+    <main id="contenido" class="mx-auto max-w-5xl px-4 pb-24"><slot /></main>
+    <footer class="border-t border-line py-8 text-sm text-muted">
+      <div class="mx-auto flex max-w-5xl flex-col items-center justify-between gap-3 px-4 sm:flex-row">
+        <p>© {new Date().getFullYear()} riaal.04 · Hecho a mano con Astro</p>
+        <nav class="flex gap-5" aria-label="Pie">
+          <a href="/apps/" class="link-sub"><span>Apps</span></a>
+          <a href="https://github.com/Rial-2004" rel="noopener" class="link-sub"><span>GitHub</span></a>
+          <a href="https://instagram.com/riaal.04" rel="noopener" class="link-sub"><span>Instagram</span></a>
+        </nav>
+      </div>
     </footer>
     <script is:inline>
       (function () {

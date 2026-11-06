@@ -2,6 +2,7 @@
 name: AppFitness
 tagline: Tu gimnasio, sin ruido.
 summary: Registro de entrenamientos, rutinas, programas y peso corporal en una app Android hecha a mano. Funciona sin cuenta y sin conexión; la cuenta de Google es opcional y solo sirve para compartir rutinas.
+metaDescription: Registro de entrenamientos, rutinas y peso corporal en una app Android hecha a mano. Sin cuenta y sin conexión. Descarga directa del APK.
 releasesRepo: Rial-2004/Rial-2004.github.io
 releaseTag: appfitness
 apkFile: AppFitness.apk

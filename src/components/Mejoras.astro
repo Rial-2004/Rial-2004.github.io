@@ -1,5 +1,6 @@
 ---
 // Comentarios de usuarios (opiniones, propuestas, sugerencias) sobre GitHub Discussions vía giscus.
+// El script de giscus (terceros) solo se carga cuando la persona pulsa el botón: la página no hace peticiones externas por defecto.
 import { giscus } from '../lib/giscus';
 interface Props { term: string; title?: string; intro?: string }
 const {
@@ -8,20 +9,35 @@ const {
   intro = '¿Algo que no te gusta, un fallo o una idea para la próxima versión? Cuéntalo aquí abajo.',
 } = Astro.props;
 ---
-<section id="mejoras" class="mt-14">
+<section id="mejoras" class="mt-14 scroll-mt-6">
   <h2 class="text-2xl font-bold">{title}</h2>
   <p class="mt-2 max-w-2xl text-muted">{intro}</p>
   {giscus ? (
-    <>
-      <div class="giscus mt-6"></div>
-      <script is:inline
-        src="https://giscus.app/client.js"
-        data-repo={giscus.repo} data-repo-id={giscus.repoId}
-        data-category={giscus.category} data-category-id={giscus.categoryId}
-        data-mapping="specific" data-term={term} data-strict="1"
-        data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top"
-        data-theme="preferred_color_scheme" data-lang="es" data-loading="lazy" crossorigin="anonymous" async></script>
-    </>
+    <div class="mt-6" data-giscus-caja
+      data-repo={giscus.repo} data-repo-id={giscus.repoId}
+      data-category={giscus.category} data-category-id={giscus.categoryId} data-term={term}>
+      <div class="giscus"></div>
+      <button type="button" data-giscus-cargar class="btn-outline rounded-full px-6 py-3 font-semibold">Mostrar comentarios y escribir</button>
+      <p class="mt-3 text-sm text-muted">Al mostrarlos se cargan desde giscus (GitHub); hace falta una cuenta de GitHub para escribir.</p>
+    </div>
+    <script is:inline>
+      document.querySelectorAll('[data-giscus-caja]').forEach(function (caja) {
+        var btn = caja.querySelector('[data-giscus-cargar]');
+        btn.addEventListener('click', function () {
+          var s = document.createElement('script');
+          s.src = 'https://giscus.app/client.js';
+          var d = caja.dataset;
+          s.setAttribute('data-repo', d.repo); s.setAttribute('data-repo-id', d.repoId);
+          s.setAttribute('data-category', d.category); s.setAttribute('data-category-id', d.categoryId);
+          s.setAttribute('data-mapping', 'specific'); s.setAttribute('data-term', d.term); s.setAttribute('data-strict', '1');
+          s.setAttribute('data-reactions-enabled', '1'); s.setAttribute('data-emit-metadata', '0'); s.setAttribute('data-input-position', 'top');
+          s.setAttribute('data-theme', 'preferred_color_scheme'); s.setAttribute('data-lang', 'es');
+          s.crossOrigin = 'anonymous'; s.async = true;
+          caja.querySelector('.giscus').appendChild(s);
+          btn.parentNode.querySelectorAll('button, p').forEach(function (el) { el.hidden = true; });
+        });
+      });
+    </script>
   ) : (
     <p class="mt-6 rounded-2xl border border-dashed border-line p-6 text-muted">Este espacio se activará muy pronto.</p>
   )}

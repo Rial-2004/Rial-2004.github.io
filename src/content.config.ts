@@ -8,6 +8,8 @@ const apps = defineCollection({
     name: z.string(),
     tagline: z.string(),
     summary: z.string(),
+    // Descripción para buscadores y redes (máx. 160). Si falta, se usa `summary`.
+    metaDescription: z.string().max(160).optional(),
     // Repo público y Release donde está la APK (los repos privados no sirven descargas). La CI de la app publica ahí
     // `version.json` (para mostrar la versión y el tamaño) y una copia `<apkFile>` con nombre fijo para el botón.
     releasesRepo: z.string().optional(),
@@ -22,6 +24,8 @@ const apps = defineCollection({
       categoria: z.enum(['entrenar', 'rutinas', 'progreso', 'comunidad', 'perfil', 'widgets', 'actualizar']),
       title: z.string(),
       summary: z.string(),
+    // Descripción para buscadores y redes (máx. 160). Si falta, se usa `summary`.
+    metaDescription: z.string().max(160).optional(),
       steps: z.array(z.string()).default([]),
       images: z.array(z.string()).default([]),
       note: z.string().optional(),

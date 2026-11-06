@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://rial-2004.github.io/sitemap-index.xml
